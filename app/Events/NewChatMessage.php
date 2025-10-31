@@ -21,18 +21,18 @@ class NewChatMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        // Canal do chat (um canal por número)
+        // canal público baseado no chat_id
         return new Channel('chat.' . $this->message->chat_id);
     }
 
     public function broadcastWith()
     {
         return [
-            'id'       => $this->message->id,
-            'chat_id'  => $this->message->chat_id,
-            'message'  => $this->message->message,
-            'from_me'  => $this->message->from_me,
-            'sent_at'  => $this->message->sent_at->format('Y-m-d H:i:s'),
+            'id' => $this->message->id,
+            'chat_id' => $this->message->chat_id,
+            'message' => $this->message->message,
+            'from_me' => $this->message->from_me,
+            'sent_at' => $this->message->sent_at->format('Y-m-d H:i:s'),
         ];
     }
 }

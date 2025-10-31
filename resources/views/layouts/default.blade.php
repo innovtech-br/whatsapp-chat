@@ -38,15 +38,19 @@
         window.Echo = new Echo({
             broadcaster: 'reverb',
             key: "{{ env('REVERB_APP_KEY') }}",
-            wsHost: "{{ env('REVERB_HOST') }}",
+            wsHost: "{{ env('REVERB_HOST', window.location.hostname) }}",
             wsPort: "{{ env('REVERB_PORT', 8080) }}",
             wssPort: "{{ env('REVERB_PORT', 8080) }}",
-            forceTLS: true,
+            forceTLS: "{{ env('REVERB_SCHEME', 'http') }}" === 'https',
+
+            disableStats: true,
             enabledTransports: ['ws', 'wss'],
         });
 
         Echo.channel('chat.559181482346@s.whatsapp.net')
             .listen('NewChatMessage', (e) => {
+                console.log('Nova mensagem recebida:', e);
+
                 const container = document.querySelector('.chat-container');
                 const div = document.createElement('div');
                 div.className = 'mb-2 text-start';
@@ -55,6 +59,7 @@
                 container.scrollTop = container.scrollHeight;
             });
     </script>
+
 
 </head>
 

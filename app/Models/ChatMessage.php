@@ -22,3 +22,4 @@ class ChatMessage extends Model
         'sent_at' => 'datetime',
     ];
 }
+

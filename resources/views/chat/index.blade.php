@@ -1,20 +1,17 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="container py-4">
-    <h4 class="mb-4">Chat com 559181482346</h4>
-
-    <div class="border rounded p-3 bg-light" style="height: 70vh; overflow-y: auto;">
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Chat com 559181482346
+    </div>
+    <div class="card-body chat-container bg-light">
         @foreach ($messages as $msg)
-            @if($msg->from_me)
-                <div class="text-end mb-2">
-                    <span class="badge bg-primary text-white">{{ $msg->message }}</span>
-                </div>
-            @else
-                <div class="text-start mb-2">
-                    <span class="badge bg-secondary">{{ $msg->message }}</span>
-                </div>
-            @endif
+            <div class="mb-2 {{ $msg->from_me ? 'text-end' : 'text-start' }}">
+                <span class="message-bubble {{ $msg->from_me ? 'from-me' : 'from-them' }}">
+                    {{ $msg->message }}
+                </span>
+            </div>
         @endforeach
     </div>
 </div>

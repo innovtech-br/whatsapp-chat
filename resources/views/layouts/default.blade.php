@@ -38,11 +38,10 @@
         window.Echo = new Echo({
             broadcaster: 'reverb',
             key: "{{ env('REVERB_APP_KEY') }}",
-            wsHost: "{{ env('REVERB_HOST', window.location.hostname) }}",
-            wsPort: "{{ env('REVERB_PORT', 8080) }}",
-            wssPort: "{{ env('REVERB_PORT', 8080) }}",
-            forceTLS: "{{ env('REVERB_SCHEME', 'http') }}" === 'https',
-
+            wsHost: window.location.hostname,
+            wsPort: 8080,
+            wssPort: 8080,
+            forceTLS: true, // coloque true se estiver usando HTTPS
             disableStats: true,
             enabledTransports: ['ws', 'wss'],
         });

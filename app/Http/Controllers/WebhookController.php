@@ -20,13 +20,13 @@ class WebhookController extends Controller
             $message = $data['event']['Message']['extendedTextMessage']['text'] ?? null;
 
             if ($message) {
-                ChatMessage::create([
-                    'chat_id' => $info['Chat'],
-                    'sender'  => $info['Sender'] ?? null,
-                    'message' => $message,
-                    'from_me' => $info['IsFromMe'] ?? false,
-                    'sent_at' => $info['Timestamp'] ?? now(),
-                ]);
+                // ChatMessage::create([
+                //     'chat_id' => $info['Chat'],
+                //     'sender'  => $info['Sender'] ?? null,
+                //     'message' => $message,
+                //     'from_me' => $info['IsFromMe'] ?? false,
+                //     'sent_at' => $info['Timestamp'] ?? now(),
+                // ]);
 
                 $chatMessage = ChatMessage::create([
                     'chat_id' => $info['Chat'],

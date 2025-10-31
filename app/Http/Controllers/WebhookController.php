@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\ChatMessage;
+
 
 class WebhookController extends Controller
 {
@@ -13,14 +15,23 @@ class WebhookController extends Controller
 
         $data = $request->all();
 
-        if (isset($data['messages'])) {
-            foreach ($data['messages'] as $msg) {
-                $from = $msg['from'] ?? 'desconhecido';
-                $text = $msg['text'] ?? 'sem texto';
-                Log::info("Mensagem de {$from}: {$text}");
+        if (isset($data['event']['Info'])) {
+            $info = $data['event']['Info'];
+            $message = $data['event']['Message']['extendedTextMessage']['text'] ?? null;
+
+            if ($message) {
+                ChatMessage::create([
+                    'chat_id' => $info['Chat'],
+                    'sender'  => $info['Sender'] ?? null,
+                    'message' => $message,
+                    'from_me' => $info['IsFromMe'] ?? false,
+                    'sent_at' => $info['Timestamp'] ?? now(),
+                ]);
             }
         }
 
         return response()->json(['status' => 'ok']);
     }
 }
+
+

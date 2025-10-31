@@ -40,13 +40,13 @@ class WuzApiService
         $response = Http::withHeaders($headers)->post($url, $payload);
 
         // dentro de sendText(), após o $response:
-        ChatMessage::create([
-            'chat_id' => $phone . '@s.whatsapp.net',
-            'sender'  => 'me',
-            'message' => $message,
-            'from_me' => true,
-            'sent_at' => now(),
-        ]);
+        // ChatMessage::create([
+        //     'chat_id' => $phone . '@s.whatsapp.net',
+        //     'sender'  => 'me',
+        //     'message' => $message,
+        //     'from_me' => true,
+        //     'sent_at' => now(),
+        // ]);
 
         Log::info('WuzAPI SEND TEXT', [
             'url'     => $url,

@@ -2,15 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Reverb Applications
-    |--------------------------------------------------------------------------
-    |
-    | Configure as credenciais e permissões para o servidor Reverb.
-    |
-    */
-
     'apps' => [
         [
             'id' => env('REVERB_APP_ID', 'corbansys'),
@@ -21,16 +12,6 @@ return [
             'enable_statistics' => true,
         ],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Servidor Reverb
-    |--------------------------------------------------------------------------
-    |
-    | Configura o servidor WebSocket usado para broadcast.
-    | Caso use HTTPS, mantenha o scheme = 'https' e porta 443.
-    |
-    */
 
     'server' => [
         'host' => env('REVERB_HOST', '0.0.0.0'),

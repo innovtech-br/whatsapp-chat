@@ -32,32 +32,37 @@
             background-color: #e9ecef;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
+    {{-- Scripts do Echo + Pusher (necessários para Reverb) --}}
+<script src="https://cdn.jsdelivr.net/npm/pusher-js@8.3.0/dist/web/pusher.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
 
-    <script>
-        window.Echo = new Echo({
-            broadcaster: 'reverb',
-            key: "{{ env('REVERB_APP_KEY') }}",
-            wsHost: window.location.hostname,
-            wsPort: 8080,
-            wssPort: 8080,
-            forceTLS: true, // coloque true se estiver usando HTTPS
-            disableStats: true,
-            enabledTransports: ['ws', 'wss'],
+<script>
+    // Inicializa o Echo com Reverb
+    window.Echo = new Echo({
+        broadcaster: 'reverb',
+        key: "{{ env('REVERB_APP_KEY') }}",
+        wsHost: "{{ env('REVERB_HOST', window.location.hostname) }}",
+        wsPort: "{{ env('REVERB_PORT', 443) }}",
+        wssPort: "{{ env('REVERB_PORT', 443) }}",
+        forceTLS: true,
+        disableStats: true,
+        enabledTransports: ['wss'],
+    });
+
+    // Teste: ouvir canal
+    Echo.channel('chat.559181482346@s.whatsapp.net')
+        .listen('NewChatMessage', (e) => {
+            console.log('📩 Nova mensagem recebida via WebSocket:', e);
+
+            const container = document.querySelector('.chat-container');
+            const div = document.createElement('div');
+            div.className = 'mb-2 text-start';
+            div.innerHTML = `<span class="message-bubble from-them">${e.message}</span>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         });
+</script>
 
-        Echo.channel('chat.559181482346@s.whatsapp.net')
-            .listen('NewChatMessage', (e) => {
-                console.log('Nova mensagem recebida:', e);
-
-                const container = document.querySelector('.chat-container');
-                const div = document.createElement('div');
-                div.className = 'mb-2 text-start';
-                div.innerHTML = `<span class="message-bubble from-them">${e.message}</span>`;
-                container.appendChild(div);
-                container.scrollTop = container.scrollHeight;
-            });
-    </script>
 
 
 </head>
